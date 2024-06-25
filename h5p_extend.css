@@ -1,0 +1,14 @@
+.speaker_controls{
+z-index: 999;
+/*position:absolute;*/
+background-image:url("../image/speaker.png");
+background-repeat: no-repeat;
+float:right;
+}
+
+.h5p-image > img {
+/*    display: inline;
+    float: left;
+    height: 100%;
+    width: 75% !important; */
+}
