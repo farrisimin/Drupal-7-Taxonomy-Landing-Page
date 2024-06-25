@@ -1,0 +1,11 @@
+name = "Green"
+description = "Custom Module for arranging greenteachers taxonomy."
+package = "Green Teachers"
+core = 7.x
+configure = admin/config/user-interface/greenteachers_voc
+files[] = includes/green.inc
+stylesheets[all][] = css/green_base.css
+stylesheets[all][] = css/green_screen.css
+version = "7.x-1"
+core = "7.x"
+project = "green"

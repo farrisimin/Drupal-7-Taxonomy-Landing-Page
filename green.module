@@ -1,0 +1,92 @@
+<?php
+
+/**
+ * Implements hook_permission().
+ */
+function green_permission() {
+  return array(
+    'Green Landing Page' => array(
+      'title' => t('Green Landing Page'),
+      'description' => t('Give this permission to provide access to landing page.'),
+    ),
+    /*'green_grades_access' => array(
+      'title' => t('Green Grades Page'),
+      'description' => t('Give this permission to provide access to Grades page.'),
+    ),
+    'green_subjects_access' => array(
+      'title' => t('Green Subjects Page'),
+      'description' => t('Give this permission to provide access to Subjects page.'),
+    ),*/
+  );
+}
+
+/**
+ * implementing HOOK_MENU
+ */
+function green_menu() {
+  $items['admin/config/user-interface/greenteachers_voc'] = array(
+	  'title' => 'Select Base Vocabulary For Homepage',
+	  'description' => 'Green Teachers Base vocabulary for homepage',
+	  'page callback' => 'drupal_get_form',
+	  'page arguments' => array('green_taxonomy_manager_voc_homepage'),
+	  'access arguments' => array('administer site configuration'),
+	  'type' => MENU_NORMAL_ITEM,
+	  'file' => 'includes/green.inc',
+  );
+
+  $items['green/landing'] = array(
+	  'title' => 'Homepage',
+//    'description' => 'Administer vocabularies with the Taxonomy Manager',
+	  'page callback' => 'green_homepage',
+	  'access arguments' => array('Green Landing Page'),
+	  'type' => MENU_NORMAL_ITEM,
+	  'file' => 'includes/green.inc',
+  );
+  $items['green/grades'] = array(
+	  'title' => '',
+//    'description' => 'Administer vocabularies with the Taxonomy Manager',
+	  'page callback' => 'green_grades',
+	  'access arguments' => array('Green Landing Page'),
+	  'type' => MENU_NORMAL_ITEM,
+	  'file' => 'includes/green.inc',
+  );
+  $items['green/subjects'] = array(
+	  'title' => '',
+//    'description' => 'Administer vocabularies with the Taxonomy Manager',
+	  'page callback' => 'green_subjects',
+	  'access arguments' => array('Green Landing Page'),
+	  'type' => MENU_NORMAL_ITEM,
+	  'file' => 'includes/green.inc',
+  );
+  return $items;
+}
+
+/*
+ * Implementation of hook_theme
+ */
+
+function green_theme() {
+  return array(
+	  'green_homepage' => array(
+		  'template' => 'templates/green-homepage',
+		  'variables' => array('homepage_data' => NULL),
+	  ),
+	  'green_grades' => array(
+		  'template' => 'templates/green-grades',
+		  'variables' => array('green_grades_data' => NULL),
+	  ),
+	  'green_subjects' => array(
+		  'template' => 'templates/green-subjects',
+		  'variables' => array('green_subjects_data' => NULL),
+	  ),
+  );
+}
+
+function green_node_view($node, $view_mode, $langcode) {
+	global $conf;
+	if ($node->type == 'h5p_content' && $conf['green_enable_image_audio'] == TRUE) {
+		drupal_add_css(drupal_get_path('module', 'green') . '/css/h5p_extend.css');
+		drupal_add_js(drupal_get_path('module', 'green') . '/js/h5p_extend.js');
+	}
+}
+
